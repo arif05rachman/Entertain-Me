@@ -1,0 +1,136 @@
+
+import React, { useState } from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useHistory } from "react-router-dom";
+import { Spinner, Button, Modal } from "react-bootstrap"
+import { TvSeriesCard } from "../../Components";
+import { FETCH_ALL_TV_SERIES, ADD_TV_SERIES } from "../../schemas/tvSeriesSchemas";
+
+export default () => {
+  const { loading, error, data, refetch } = useQuery(FETCH_ALL_TV_SERIES);
+  const [addTvSeries] = useMutation(ADD_TV_SERIES);
+  const history = useHistory();
+
+  // ADDING
+  const [show, setShow] = useState(false);
+  const [titleAdd, setTitleAdd] = useState("");
+  const [overviewAdd, setOverviewAdd] = useState("");
+  const [posterPathAdd, setPosterPathAdd] = useState("");
+  const [popularityAdd, setPopularityAdd] = useState("");
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-content-center align-middle align-items-center"
+        style={{ width: "100vw", height: "100vh" }}
+      >
+        <div>
+          <Spinner
+            animation="border"
+            role="status"
+            style={{ fontSize: "200px" }}
+          >
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      </div>
+    );
+  }
+  if (error) {
+    return <div>{error}</div>;
+  }
+  // Modal Add
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleSave = () => {
+    const addTvSeriesData = {
+      title: titleAdd,
+      overview: overviewAdd,
+      popularity: parseFloat(popularityAdd),
+      poster_path: posterPathAdd,
+      tags: ["anime"]
+    };
+    addTvSeries({ variables: addTvSeriesData });
+    refetch()
+    history.push("/tvMovies");
+    setShow(false);
+    setTitleAdd("")
+    setOverviewAdd("")
+    setPosterPathAdd("")
+    setPopularityAdd("")
+  };
+  
+  return (
+    <>
+      <div className="container border border-black mt-2">
+        <div className="text-center mt-2">
+          <Button variant="primary" onClick={handleShow}>
+            Add Tv Series
+          </Button>
+        </div>
+        <div className="row">
+          {data.tvSeries.map((tvSeries) => {
+            return (
+              // <div>INI</div>
+              <TvSeriesCard tvSeries={tvSeries} key={tvSeries._id} refetch={refetch}/>
+            );
+          })}
+        </div>
+      </div>
+      {/* MODAL ADD */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Tv Series</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <div className="form-group">
+              <label>Title</label>
+              <input
+                type="text"
+                className="form-control"
+                value={titleAdd}
+                onChange={(e) => setTitleAdd(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label>Overview</label>
+              <textarea
+                className="form-control"
+                value={overviewAdd}
+                onChange={(e) => setOverviewAdd(e.target.value)}
+              ></textarea>
+            </div>
+            <div className="form-group">
+              <label>Poster Path</label>
+              <input
+                type="text"
+                className="form-control"
+                value={posterPathAdd}
+                onChange={(e) => setPosterPathAdd(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label>Popularity</label>
+              <input
+                type="number"
+                max="10"
+                className="form-control"
+                value={popularityAdd}
+                onChange={(e) => setPopularityAdd(e.target.value)}
+              />
+            </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSave}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* END MODAL ADD */}
+    </>
+  );
+};
