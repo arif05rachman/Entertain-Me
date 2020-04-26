@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { ApolloServer, gql } = require("apollo-server")
 
 // const express = require("express")
@@ -23,6 +24,6 @@ const server = new ApolloServer({
   schema : mergedSchemas
 })
 
-server
-  .listen()
-  .then(({url})=> console.log(`entertainme server allready running on ${url}`))
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
