@@ -1,8 +1,12 @@
+const { baseURLTvSeries } = require("../config");
 const tvSeriesApi = require("axios").default.create({
-  baseURL: `http://localhost:3002`,
+  baseURL: baseURLTvSeries,
 });
-const Redis = require("ioredis");
-const redis = new Redis();
+// REDIS
+// const Redis = require("ioredis");
+// const redis = new Redis();
+// REDIS LAB
+const redis = require('../redisLab')
 
 const tvSeriesQueryResolver = {
   tvSeries: async () => {

@@ -1,14 +1,19 @@
+const { baseURLMovies } = require("../config")
 const moviesApi = require("axios").default.create({
-  baseURL: `http://localhost:3001`,
+  baseURL: baseURLMovies,
 });
-const Redis = require("ioredis");
-const redis = new Redis();
+// REDIS
+// const Redis = require("ioredis");
+// const redis = new Redis();
+// REDIS LAB
+const redis = require("../redisLab");
 
 const moviesQueryResolver = {
   movies: async () => {
     try {
-      const movies = await redis.get("movies");
+      let movies = await redis.get("movies")
       const parsedMovies = JSON.parse(movies);
+      console.log(parsedMovies)
       if (!parsedMovies || !parsedMovies.length) {
         console.log("masuk api")
         const { data } = await moviesApi.get("/movies");

@@ -2,7 +2,9 @@ const Redis = require("ioredis");
 const redis = new Redis();
 const axios = require("axios").default;
 
-const tvSeriesApi = axios.create({ baseURL: "http://localhost:3002" });
+const tvSeriesApi = axios.create({
+  baseURL: "https://arcane-brook-08405.herokuapp.com",
+});
 
 class tvSeriesController {
   static async create(req, res, next) {
