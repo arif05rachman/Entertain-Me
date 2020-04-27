@@ -5,6 +5,7 @@ const {
   tvSeriesQueryResolver,
   tvSeriesMutationResolver,
 } = require("../resolvers/tvSeries");
+      console.log("MASUK RESOLVER");
 
 const tvSeriesSchema = makeExecutableSchema({
   typeDefs: gql`

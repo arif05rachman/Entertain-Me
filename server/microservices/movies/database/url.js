@@ -1,0 +1,1 @@
+module.exports = "mongodb+srv://arif05rachman:20082009@arif05rachman-pfggb.mongodb.net/test?retryWrites=true&w=majority"

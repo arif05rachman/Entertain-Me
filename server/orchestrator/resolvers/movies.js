@@ -13,14 +13,12 @@ const moviesQueryResolver = {
     try {
       let movies = await redis.get("movies")
       const parsedMovies = JSON.parse(movies);
-      console.log(parsedMovies)
       if (!parsedMovies || !parsedMovies.length) {
         console.log("masuk api")
         const { data } = await moviesApi.get("/movies");
         await redis.set("movies", JSON.stringify(data));
         return data;
       } else {
-        console.log("masuk redis");
         return parsedMovies
       }
     } catch (err) {

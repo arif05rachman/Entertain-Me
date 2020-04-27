@@ -20,7 +20,8 @@ import {
 const history = createBrowserHistory();
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: "https://lit-tor-48728.herokuapp.com",
+  // uri: "http://localhost:4000",
   clientState: {
     resolvers: {
       Mutation: {
