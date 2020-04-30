@@ -21,7 +21,7 @@ export default (props) => {
   const [overviewEdit, setOverviewEdit] = useState(overview)
   const [posterPathEdit, setPosterPathEdit] = useState(poster_path)
   const [popularityEdit, setPopularityEdit] = useState(popularity)
-  const handleSave = () => {
+  const handleSave = async () => {
     const updateMovieData = {
       _id: _id,
       title: titleEdit,
@@ -30,8 +30,8 @@ export default (props) => {
       poster_path: posterPathEdit,
       tags: ["anime"],
     };
-    updateMovie({ variables: updateMovieData });
-    refetch();
+    await updateMovie({ variables: updateMovieData });
+    await refetch();
     // history.push("/movies");
     setShow(false);
   }
@@ -40,11 +40,11 @@ export default (props) => {
   const handleCloseDelete = () => setShowDelete(false);
   const handleShowDelete = () => setShowDelete(true);
   const handleCancelDelete = () => setShowDelete(false);
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const deleteId = {
       _id: _id
     }
-    deleteMovie({ variables: deleteId });
+    await deleteMovie({ variables: deleteId });
     refetch();
     setShowDelete(false);
   }
@@ -104,8 +104,8 @@ export default (props) => {
             </Button>
           </Modal.Footer>
         </Modal>
-        <Card style={{ width: "13rem" }}>
-          <Card.Img variant="top" src={poster_path} />
+        <Card style={{ width: "13rem" }} className="rounded shadow-sm">
+          <Card.Img variant="top" src={poster_path} style={{height: "20vW"}}/>
           <Card.Body>
             <Card.Title className="text-center">{title}</Card.Title>
             <Card.Text>

@@ -19,7 +19,7 @@ export default () => {
         <Link to="/movies" className="mx-1">
           <Button variant="light">Movies</Button>
         </Link>
-        <Link to="/tvSeries"  className="mx-1">
+        <Link to="/tv"  className="mx-1">
           <Button  variant="light">Tv Series</Button>
         </Link>
       </Nav>

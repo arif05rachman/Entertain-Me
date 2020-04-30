@@ -24,10 +24,10 @@ function App() {
           <MovieDetail />
         </Route>
 
-        <Route path="/tvSeries" exact>
+        <Route path="/tv" exact>
           <TvSeriesList searchQuery={searchQuery} />
         </Route>
-        <Route path="/tvSeries/:tvSeriesId" exact>
+        <Route path="/tv/:tvSeriesId" exact>
           <TvSeriesDetail />
         </Route>
       </Switch>

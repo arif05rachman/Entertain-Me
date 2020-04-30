@@ -21,7 +21,7 @@ export default (props) => {
   const [overviewEdit, setOverviewEdit] = useState(overview)
   const [posterPathEdit, setPosterPathEdit] = useState(poster_path)
   const [popularityEdit, setPopularityEdit] = useState(popularity)
-  const handleSave = () => {
+  const handleSave = async () => {
     const updateTvSeriesData = {
       _id: _id,
       title: titleEdit,
@@ -30,8 +30,8 @@ export default (props) => {
       poster_path: posterPathEdit,
       tags: [""],
     };
-    updateTvSeries({ variables: updateTvSeriesData });
-    refetch();
+    await updateTvSeries({ variables: updateTvSeriesData });
+    await refetch();
     // history.push("/tvSeries");
     setShow(false);
   }
@@ -40,11 +40,11 @@ export default (props) => {
   const handleCloseDelete = () => setShowDelete(false);
   const handleShowDelete = () => setShowDelete(true);
   const handleCancelDelete = () => setShowDelete(false);
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const deleteId = {
       _id: _id
     }
-    deleteTvSeries({ variables: deleteId });
+    await deleteTvSeries({ variables: deleteId });
     refetch();
     setShowDelete(false);
   }
@@ -104,7 +104,7 @@ export default (props) => {
             </Button>
           </Modal.Footer>
         </Modal>
-        <Card style={{ width: "13rem" }}>
+        <Card style={{ width: "13rem" }} className="rounded shadow-sm">
           <Card.Img variant="top" src={poster_path} />
           <Card.Body>
             <Card.Title className="text-center">{title}</Card.Title>
@@ -124,7 +124,7 @@ export default (props) => {
               </span>
             </Card.Text>
             <div className="text-center row">
-              <Link to={`/tvSeries/${_id}`}>
+              <Link to={`/tv/${_id}`}>
                 <Button variant="primary" className="col">
                   Show
                 </Button>

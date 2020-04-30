@@ -41,7 +41,7 @@ export default () => {
   // Modal Add
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleSave = () => {
+  const handleSave = async () => {
     const addMovieData = {
       title: titleAdd,
       overview: overviewAdd,
@@ -49,9 +49,9 @@ export default () => {
       poster_path: posterPathAdd,
       tags: ["anime"]
     };
-    addMovie({ variables: addMovieData });
-    refetch()
-    history.push("/movies");
+    await addMovie({ variables: addMovieData });
+    await refetch()
+    // history.push("/movies");
     setShow(false);
     setTitleAdd("")
     setOverviewAdd("")
@@ -61,13 +61,15 @@ export default () => {
   
   return (
     <>
-      <div className="container border border-black mt-2">
+      <div className="container border border-black mt-2 rounded shadow-sm">
         <div className="text-center mt-2">
           <Button variant="primary" onClick={handleShow}>
             Add Movie
           </Button>
         </div>
+        <hr/>
         <div className="row">
+          {console.log(data)}
           {data.movies.map((movie) => {
             return (
               <MovieCard movie={movie} key={movie._id} refetch={refetch}/>

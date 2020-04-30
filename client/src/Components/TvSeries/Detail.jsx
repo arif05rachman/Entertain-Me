@@ -76,7 +76,7 @@ export default () => {
                 <hr />
                 <Card.Text className="text-justify">{overview}</Card.Text>
               </Card.Body>
-              <Link to="/tvSeries">
+              <Link to="/tv">
                 <Button className="col">Back to List</Button>
               </Link>
             </Card>

@@ -41,7 +41,7 @@ export default () => {
   // Modal Add
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleSave = () => {
+  const handleSave = async () => {
     const addTvSeriesData = {
       title: titleAdd,
       overview: overviewAdd,
@@ -49,9 +49,9 @@ export default () => {
       poster_path: posterPathAdd,
       tags: ["anime"]
     };
-    addTvSeries({ variables: addTvSeriesData });
-    refetch()
-    history.push("/tvMovies");
+    await addTvSeries({ variables: addTvSeriesData });
+    await refetch()
+    // history.push("/tvSeries");
     setShow(false);
     setTitleAdd("")
     setOverviewAdd("")
@@ -61,17 +61,22 @@ export default () => {
   
   return (
     <>
-      <div className="container border border-black mt-2">
+      <div className="container border border-black mt-2 rounded shadow-sm">
         <div className="text-center mt-2">
           <Button variant="primary" onClick={handleShow}>
             Add Tv Series
           </Button>
         </div>
+        <hr/>
         <div className="row">
-          {data.tvSeries.map((tvSeries) => {
+          {console.log(data)}
+          {data.tvSeries.map((tv) => {
             return (
-              // <div>INI</div>
-              <TvSeriesCard tvSeries={tvSeries} key={tvSeries._id} refetch={refetch}/>
+              <TvSeriesCard
+                tvSeries={tv}
+                key={tv._id}
+                refetch={refetch}
+              />
             );
           })}
         </div>
